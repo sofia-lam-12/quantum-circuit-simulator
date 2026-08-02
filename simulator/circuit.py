@@ -1,3 +1,5 @@
+import numpy as np
+
 class QuantumCircuit:
     """
     A class representing a QuantumCircuit that can be applied to a QuantumState object.
@@ -12,13 +14,13 @@ class QuantumCircuit:
     Invariant: must be a list of Gate objects.
 
     """
-    def __init__(num):
+    def __init__(self, num):
         assert type(num) == int
 
         self.number = num
         self.gates = [] #initialize an empty list to the store the gates
 
-    def operate(state):
+    def operate(self, state):
         """
         Performs this QuantumCircuit on a quantum state. 
 

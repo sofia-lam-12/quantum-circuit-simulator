@@ -1,9 +1,13 @@
-class Qubit:
+import numpy as np
+
+class Qubit(QuantumState):
     """
     A class representing a single qubit.
     """
     def __init__(self, state):
-        self.state = state
+        super().__init__(state)
+        assert self.num == 1, "Qubit must have a single qubit"
+        assert self.length == 2, "Qubit state vector must have length 2"
 
     def apply_gate(self, gate):
         # Apply a quantum gate to the qubit's state
@@ -15,10 +19,10 @@ class Qubit:
         # Measure the qubit and collapse its state
         prob = np.abs(self.state) ** 2
         result = np.random.choice([0, 1], p=prob)
-        if result === 0:
+        if result == 0:
             self.state = np.array([1, 0])
         else:
-            result = np.array([0, 1])
+            self.state = np.array([0, 1])
         return result
     
     # """

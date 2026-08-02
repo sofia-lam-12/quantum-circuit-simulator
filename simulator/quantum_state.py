@@ -1,4 +1,4 @@
-import numpy as py
+import numpy as np
 
 class QuantumState:
     """
@@ -19,9 +19,9 @@ class QuantumState:
 
         assert state.ndim == 1, "State vector must be a 1D array."
         assert state.shape[0] > 0, "State vector size must be greater than 0."
-        assert py.isclose(py.linalg.norm(state), 1), "State vector must be normalized."
-        assert py.log2(state.shape[0]).is_integer(), "State vector size must be a power of 2."
+        assert np.isclose(np), "State vector must be normalized."
+        assert np.log2(state.shape[0]).is_integer(), "State vector size must be a power of 2."
         
         self.state = state
         self.length = len(state)
-        self.num = int(py.log2(self.length))
+        self.num = int(np)
