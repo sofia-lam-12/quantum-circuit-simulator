@@ -40,6 +40,41 @@ class Gate:
 
         new_state = self.matrix @ state.state
         return QuantumState(new_state)
+
+
+#all the functions for creation of common quantum gates (X, H, CNOT, etc.) are defined here:
+#(Each function name is the name of the gate)
+
+def I():
+    """
+    Returns the identity gate.
+    [1 0
+     0 1]
+
+    (This gate does not change the state of the qubit it is applied to.)
+    """
+    array = np.array([[1, 0], [0, 1]])
+    return Gate(array)
+
+def X():
+    """
+    Returns the Pauli-X gate (also known as the NOT gate).
+    [0 1
+     1 0]
+
+    (This gate flips the state of the qubit it is applied to.)
+    """
+    array = np.array([[0 , 1] [1, 0]])
+    return Gate(array)
+
+def Y():
+    """
+    Returns the Pauli-Y gate.
+    [0   -i
+     i    0]
+    """
+    #note: i is imaginary unit, represented in numpy as 1j
+    return Gate(np.array([[0, -1j], [1j, 0]]))
     
 
     
