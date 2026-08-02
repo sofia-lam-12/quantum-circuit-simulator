@@ -19,9 +19,14 @@ class QuantumState:
 
         assert state.ndim == 1, "State vector must be a 1D array."
         assert state.shape[0] > 0, "State vector size must be greater than 0."
-        assert np.isclose(np), "State vector must be normalized."
+        assert isinstance(state, np.ndarray), "State vector must be a numpy array."
+        assert np.isclose(np.linalg.norm(state), 1), "State vector must be normalized."
         assert np.log2(state.shape[0]).is_integer(), "State vector size must be a power of 2."
         
         self.state = state
         self.length = len(state)
-        self.num = int(np)
+        self.num = int(np.log2(self.length)) #2^(number of qubits) = statevector length
+
+    def __repr__(self):
+        return str(self.state) + " (Quantum State)"
+
