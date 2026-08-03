@@ -58,23 +58,125 @@ def I():
 
 def X():
     """
-    Returns the Pauli-X gate (also known as the NOT gate).
+    Returns the Pauli-X gate (also known as the NOT gate), which flips the state of the qubit
+    it is applied to.
+
     [0 1
      1 0]
-
-    (This gate flips the state of the qubit it is applied to.)
     """
     array = np.array([[0 , 1] [1, 0]])
     return Gate(array)
 
 def Y():
     """
-    Returns the Pauli-Y gate.
+    Returns the Pauli-Y gate, which flips and applies a phase shift to the qubit.
+
     [0   -i
      i    0]
     """
     #note: i is imaginary unit, represented in numpy as 1j
     return Gate(np.array([[0, -1j], [1j, 0]]))
-    
 
-    
+def Z():
+    """
+    Returns the Paul-Z gate, which flips the phase of the qubit it is applied to.
+
+    [1  0
+     0 -1]
+    """
+    return Gate(np.array([[1, 0], [0, -1]]))
+
+def H():
+    """
+    Returns the Hadamard gate, which creates a superposition of the qubit it is applied to.
+
+    [1/sqrt(2)  1/sqrt(2)
+     1/sqrt(2) -1/sqrt(2)]
+    """
+    array = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
+    return Gate(array)
+
+def CNOT():
+    """
+    Returns the controlled-NOT (CNOT) gate. This 2 qubit gate flips the state of the target qubit if
+    the control qubit is 1, and does nothing (like the identity gate) if the control qubit
+    is 0.
+
+    [1 0 0 0
+     0 1 0 0
+     0 0 0 1
+     0 0 1 0]
+    """
+
+    array = np.array([[1, 0, 0, 0],
+                      [0, 1, 0, 0], 
+                      [0, 0, 0, 1],
+                      [0, 0, 1, 0]])
+    return Gate(array)
+
+def S():
+    """
+    Returns the S gate, which applies a phase shift of pi/2 to the qubit it is applied to.
+
+    [1 0
+     0 i]
+    """
+    return Gate(np.array([[1, 0], [0, 1j]]))
+
+def T():
+    """
+    Returns the T gate, which applies a phase shift of pi/4 to the qubit it is applied to.
+
+    [1 0
+     0 exp(i*pi/4)]
+    """
+    fourth = np.exp(1j * np.pi / 4)
+    return Gate(np.array([[1, 0], [0, fourth]]))
+
+def SWAP():
+    """
+    Returns the SWAP gate. This 2-qubit gate swaps the states of the two qubits it is applied to (essentially
+    relabeling the two qubits). If the two qubits are entangled, they will remain entangled. 
+    [1 0 0 0
+     0 0 1 0
+     0 1 0 0
+     0 0 0 1]
+    """
+    array = np.array([[1, 0, 0, 0],
+                      [0, 0, 1, 0], 
+                      [0, 1, 0, 0],
+                      [0, 0, 0, 1]])
+    return Gate(array)
+
+def CCNOT():
+    """
+    Returns the Toffoli gate, also known as the controlled-controlled-NOT (CCNOT) gate. This 3-qubit 
+    gate flips the state of the target qubit if both control qubits are 1, and does nothing 
+    (like the identity gate) if either control qubit is 0.
+    """
+    m = np.eye(8, dtype=complex) #first create the identity matrix
+    # keep everything the same, unless both control qubits are 1, and flip the target bit.
+    # so we swap |110> <-> |111> (they map to each other). Swap rows 6 and 7-- whatever used to map
+    # to basis vector 6 (|110>) now maps to basis vector 7 (|111>), and vice versa.
+    m[[6, 7]] = m[[7, 6]]
+    return Gate(m)
+
+def Fredkin():
+    """
+    Returns the Fredkin gate, also known as the controlled-SWAP gate. This 3-qubit gate swaps the states 
+    of the two target qubits if the control qubit is 1, and does nothing to the target qubit if the 
+    control qubit is 0.
+
+    The Fredkin gate:
+    - Upper left quadrant is the identity matrix -- control qubit is 0, so do nothing to target qubits.
+    - Upper right/Lower left quadrants are all zeros -- control qubit does not change
+    - Lower right quadrant is the SWAP gate -- control qubit is 1, so swap the target qubits.
+    """
+    m = np.eye(8, dtype=complex) #first create the identity matrix
+    #in swap, just switch the middle two rows. Since we have 0s in the other entries, we can just swap
+    # the whole rows.
+    m[[5, 6]] = m[[6, 5]]
+    return Gate(m)
+
+
+                    
