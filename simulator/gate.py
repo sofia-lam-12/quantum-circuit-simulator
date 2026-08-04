@@ -36,7 +36,7 @@ class Gate:
         Parameter state: the state that this Gate operates on.
         Precondition: state must be a QuantumState object, with the same number of qubits.
         """
-        assert state.num = self.num, "Gate and state must have the same number of qubits"
+        assert state.num == self.num, "Gate and state must have the same number of qubits"
 
         new_state = self.matrix @ state.state
         return QuantumState(new_state)
@@ -64,7 +64,7 @@ def X():
     [0 1
      1 0]
     """
-    array = np.array([[0 , 1] [1, 0]])
+    array = np.array([[0 , 1], [1, 0]])
     return Gate(array)
 
 def Y():

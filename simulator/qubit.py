@@ -13,7 +13,7 @@ class Qubit(QuantumState):
         # Apply a quantum gate to the qubit's state
         #.shape gets a tuple, so shape[0] gets the first element of tuple (row length)
         assert self.state.shape[0] == gate.size, "Gate size must match qubit size."
-        self.state = gate @ self.state #@ is matrix multiplication in numpy
+        self.state = gate.matrix @ self.state #@ is matrix multiplication in numpy
 
     def measure(self):
         # Measure the qubit and collapse its state
@@ -24,8 +24,8 @@ class Qubit(QuantumState):
         else:
             self.state = np.array([0, 1])
         return result
-    
-    # """
+     
+    # """ --- this should be in QuantumState class, not here
     # Combines this qubit with another qubit to form a two-qubit system, using a 
     # tensor product.
     # """
