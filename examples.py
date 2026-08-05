@@ -50,4 +50,19 @@ expected = np.array([1/np.sqrt(2), 0, 0, 1/np.sqrt(2)]) # the Bell state
 assert np.allclose(after_cnot.state, expected), "Not the Bell state"
 print("Bell state verified")
 
+#6) Create a QuantumCircuit and apply it to a QuantumState.
+qc = QuantumCircuit(2) # Create a QuantumCircuit for 2 qubits
+qc.add_gate(hi) # Add the H gate to the first qubit
+qc.add_gate(cnot) # Add the CNOT gate
 
+initial = QuantumState(np.array([1, 0, 0, 0])) # |00> state
+result = qc.run(initial)
+print("Result after running the QuantumCircuit:", result)
+assert np.allclose(result.state, expected), "Not the Bell state"
+print("Bell state verified")
+
+# 7) Test partial circuit execution with operate()
+partial = qc.operate(initial, 1)  # apply only the H gate, not CNOT
+expected_partial = np.array([1/np.sqrt(2), 0, 1/np.sqrt(2), 0])  # H applied to qubit 0 of |00>
+assert np.allclose(partial.state, expected_partial), "Partial operate() failed"
+print("Partial operate() verified")
