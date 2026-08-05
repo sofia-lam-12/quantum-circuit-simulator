@@ -1,6 +1,6 @@
 import numpy as np
-from gate.py import Gate
-from quantum_state.py import QuantumState
+from gate import Gate
+from quantum_state import QuantumState
 
 class QuantumCircuit:
     """

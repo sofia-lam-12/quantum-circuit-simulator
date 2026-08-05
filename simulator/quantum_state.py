@@ -30,3 +30,17 @@ class QuantumState:
     def __repr__(self):
         return str(self.state) + " (Quantum State)"
 
+    def tensor(self, other):
+        """
+        Returns a new QuantumState representing the tensor (Kronecker) product of this 
+        QuantumState with another QuantumState.
+
+        Parameter other: the other quantum state to combine with this one.
+        Precondition: other must be a QuantumState object.
+        """
+        assert isinstance(other, QuantumState), "other must be a QuantumState object"
+
+        combined_state = np.kron(self.state, other.state)
+    
+        return QuantumState(combined_state)
+

@@ -40,6 +40,30 @@ class Gate:
 
         new_state = self.matrix @ state.state
         return QuantumState(new_state)
+    
+    def tensor(self, other):
+        """
+        Returns a new Gate representing the tensor (Kronecker) product of this Gate with 
+        another Gate.
+
+        If this Gate acts on the leftmost qubit(s) and `other` acts on the remaining
+        rightmost qubit(s), then the resulting Gate represents:
+
+        self ⊗ other
+
+        For example:
+        H().combine(I())  -> H ⊗ I (Hadamard on the first qubit)
+        I().combine(H())  -> I ⊗ H (Hadamard on the second qubit)
+
+
+        Parameter other: the other Gate to combine with this one.
+        Precondition: other must be a Gate object.
+        """
+        assert isinstance(other, Gate), "other must be a Gate object"
+
+        combined_matrix = np.kron(self.matrix, other.matrix)
+    
+        return Gate(combined_matrix)
 
 
 #all the functions for creation of common quantum gates (X, H, CNOT, etc.) are defined here:
