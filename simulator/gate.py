@@ -1,4 +1,5 @@
 import numpy as np
+from simulator.quantum_state import QuantumState
 
 class Gate:
     """
